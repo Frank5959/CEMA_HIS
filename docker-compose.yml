@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=securepassword
+      - DB_NAME=health_system
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    volumes:
+      - ./src:/app/src
+      - ./database:/app/database
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: securepassword
+      MYSQL_DATABASE: health_system
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/tables:/docker-entrypoint-initdb.d/tables
+      - ./database/procedures:/docker-entrypoint-initdb.d/procedures
+
+volumes:
+  mysql-data:
