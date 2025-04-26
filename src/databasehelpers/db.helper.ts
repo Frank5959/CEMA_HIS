@@ -1,21 +1,17 @@
 import pool from "../config/database";
-import logger from "../helpers/logger.helper";
-import { PoolConnection, ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { RowDataPacket, ResultSetHeader } from "mysql2/promise";
 
 export class DbHelper {
   static async executeQuery<T extends RowDataPacket[]>(
     sql: string,
     params: any[] = []
   ): Promise<T> {
-    const connection = await pool.getConnection();
+    const conn = await pool.getConnection();
     try {
-      const [results] = await connection.query<T>(sql, params);
-      return results;
-    } catch (error) {
-      logger.error("Query failed:", error);
-      throw error;
+      const [rows] = await conn.query<T>(sql, params);
+      return rows;
     } finally {
-      connection.release();
+      conn.release();
     }
   }
 
@@ -23,15 +19,12 @@ export class DbHelper {
     sql: string,
     params: any[] = []
   ): Promise<ResultSetHeader> {
-    const connection = await pool.getConnection();
+    const conn = await pool.getConnection();
     try {
-      const [result] = await connection.query<ResultSetHeader>(sql, params);
+      const [result] = await conn.query<ResultSetHeader>(sql, params);
       return result;
-    } catch (error) {
-      logger.error("Command failed:", error);
-      throw error;
     } finally {
-      connection.release();
+      conn.release();
     }
   }
 
@@ -39,18 +32,16 @@ export class DbHelper {
     procedureName: string,
     params: any[] = []
   ): Promise<RowDataPacket[][]> {
-    const connection = await pool.getConnection();
+    const conn = await pool.getConnection();
     try {
-      const [results] = await connection.query<RowDataPacket[][]>(
-        `CALL ${procedureName}(?)`,
-        [params]
+      const placeholders = params.map(() => "?").join(", ");
+      const [results] = await conn.query<RowDataPacket[][]>(
+        `CALL ${procedureName}(${placeholders})`,
+        params
       );
       return results;
-    } catch (error) {
-      logger.error("Procedure failed:", error);
-      throw error;
     } finally {
-      connection.release();
+      conn.release();
     }
   }
 }

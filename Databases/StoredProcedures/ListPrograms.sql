@@ -1,0 +1,8 @@
+DELIMITER $$
+
+CREATE PROCEDURE ListPrograms()
+BEGIN
+  SELECT * FROM programs ORDER BY name;
+END $$
+
+DELIMITER;

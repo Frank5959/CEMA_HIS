@@ -1,0 +1,10 @@
+DELIMITER $$
+
+CREATE PROCEDURE GetProgramById(
+  IN p_id VARCHAR(36)
+)
+BEGIN
+  SELECT * FROM programs WHERE id = p_id;
+END $$
+
+DELIMITER;

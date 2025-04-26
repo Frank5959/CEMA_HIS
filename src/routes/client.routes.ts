@@ -1,20 +1,26 @@
-import express from "express";
+import { Router } from "express";
 import { ClientController } from "../controllers/client.controller";
 import { apiKeyAuth } from "../middleware/auth.middleware";
 import { validateClientCreation } from "../middleware/validation.middleware";
 
-const router = express.Router();
-const clientController = new ClientController();
+const router = Router();
+const ctrl = new ClientController();
 
 router.post(
   "/clients",
   apiKeyAuth,
   validateClientCreation,
-  clientController.createClient
+  ctrl.createClient.bind(ctrl)
 );
+router.get("/clients/:id", apiKeyAuth, ctrl.getClient.bind(ctrl));
+router.get("/clients/search", apiKeyAuth, ctrl.searchClients.bind(ctrl));
 
-router.get("/clients/:id", apiKeyAuth, clientController.getClient);
-
-router.get("/clients/search", apiKeyAuth, clientController.searchClients);
+// Enrollment endpoints
+router.post("/clients/:id/enroll", apiKeyAuth, (req, res) =>
+  ctrl.enrollClient(req, res)
+);
+router.get("/clients/:id/enrollments", apiKeyAuth, (req, res) =>
+  ctrl.getClientEnrollments(req, res)
+);
 
 export default router;
