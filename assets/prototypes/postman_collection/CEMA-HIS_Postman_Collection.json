@@ -1,0 +1,219 @@
+{
+  "info": {
+    "name": "CEMA-HIS API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Program",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Malaria\",\n  \"description\": \"Prevention and treatment\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/programs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "programs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register Client",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Jane Doe\",\n  \"contact_info\": \"jane@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/clients",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Enroll Client",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"programId\": \"{{programId}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/clients/{{clientId}}/enroll",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "{{clientId}}",
+            "enroll"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search Clients",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/clients/search?term=Jane",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "term",
+              "value": "Jane"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Client Profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/clients/{{clientId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "{{clientId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List Programs",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/programs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "programs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Client Enrollments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/clients/{{clientId}}/enrollments",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "{{clientId}}",
+            "enrollments"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
