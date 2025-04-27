@@ -20,8 +20,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static assets (presentations, mockups, etc.)
-app.use("/assets", express.static(path.join(__dirname, "../assets")));
 app.use("/api/v1", clientRoutes);
 app.use("/api/v1", programRoutes);
 

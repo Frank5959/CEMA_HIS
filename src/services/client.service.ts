@@ -4,6 +4,15 @@ import { ProgramService } from "./program.service";
 
 export class ClientService {
   async create(data: { name: string; contact_info: string }): Promise<Client> {
+    //Pre-check for existing contact_info
+    const existing = await DbHelper.executeQuery<Client[]>(
+      `SELECT * FROM clients WHERE contact_info = ?`,
+      [data.contact_info]
+    );
+    if (existing.length > 0) {
+      throw new Error("Client with this contact info already exists");
+    }
+
     const results = await DbHelper.callProcedure("CreateClient", [
       data.name,
       data.contact_info,

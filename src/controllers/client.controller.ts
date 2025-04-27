@@ -11,9 +11,13 @@ export class ClientController {
     try {
       const client = await clientService.create(req.body);
       ApiHelper.success(res, client, 201);
-    } catch (err) {
-      console.error(err);
-      ApiHelper.error(res, "Failed to create client");
+    } catch (err: any) {
+      console.error("Controller Error:", err);
+      if (err.message === "Client with this contact info already exists") {
+        return ApiHelper.error(res, err.message, 409);
+      }
+      // Fallback
+      return ApiHelper.error(res, "Failed to create client", 500);
     }
   }
   //Get a client profile and enrollments
@@ -34,6 +38,7 @@ export class ClientController {
       const term = req.query.term as string;
       if (!term) return ApiHelper.error(res, "Search term required", 400);
       const results = await clientService.search(term);
+      console.log("✅ search results:", results);
       ApiHelper.success(res, results);
     } catch (err) {
       console.error(err);

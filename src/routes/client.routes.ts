@@ -14,10 +14,10 @@ router.post(
   ctrl.createClient.bind(ctrl)
 );
 
-//check if a user is registed
-router.get("/clients/:id", apiKeyAuth, ctrl.getClient.bind(ctrl));
 //search for a client
 router.get("/clients/search", apiKeyAuth, ctrl.searchClients.bind(ctrl));
+//check if a user is registed
+router.get("/clients/:id", apiKeyAuth, ctrl.getClient.bind(ctrl));
 
 // Enrollment endpoints
 router.post("/clients/:id/enroll", apiKeyAuth, (req, res) =>
