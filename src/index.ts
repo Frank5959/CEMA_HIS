@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import clientRoutes from "./routes/client.routes";
 import programRoutes from "./routes/program.routes";
 import { ApiHelper } from "./helpers/api.helper";
+import path from "path";
 
 dotenv.config();
 const app = express();
@@ -19,6 +20,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve static assets (presentations, mockups, etc.)
+app.use("/assets", express.static(path.join(__dirname, "../assets")));
 app.use("/api/v1", clientRoutes);
 app.use("/api/v1", programRoutes);
 

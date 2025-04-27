@@ -2,9 +2,8 @@ import { DbHelper } from "../databasehelpers/db.helper";
 import { Program } from "../types/core";
 
 export class ProgramService {
-  /**
-   * Create a new program via stored procedure, handling duplicates.
-   */
+  // Create a new program via stored procedure, handling duplicates.
+
   async create(data: { name: string; description?: string }): Promise<Program> {
     try {
       const results = await DbHelper.callProcedure("CreateProgram", [
@@ -24,17 +23,14 @@ export class ProgramService {
     }
   }
 
-  /**
-   * List all programs via stored procedure.
-   */
+  // List all programs via stored procedure.
+
   async list(): Promise<Program[]> {
     const results = await DbHelper.callProcedure("ListPrograms");
     return results[0] as Program[];
   }
 
-  /**
-   * Find a program by ID via stored procedure.
-   */
+  // Find a program by ID via stored procedure.
   async findById(id: string): Promise<Program | null> {
     const results = await DbHelper.callProcedure("GetProgramById", [id]);
     const programs = results[0] as Program[];

@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import { ClientService } from "../services/client.service";
 import { ApiHelper } from "../helpers/api.helper";
 
+// this controller handle client-related HTTP requests
 const clientService = new ClientService();
 
 export class ClientController {
+  // Register a new client
   async createClient(req: Request, res: Response) {
     try {
       const client = await clientService.create(req.body);
@@ -14,7 +16,7 @@ export class ClientController {
       ApiHelper.error(res, "Failed to create client");
     }
   }
-
+  //Get a client profile and enrollments
   async getClient(req: Request, res: Response) {
     try {
       const client = await clientService.findById(req.params.id);
@@ -26,7 +28,7 @@ export class ClientController {
       ApiHelper.error(res, "Failed to retrieve client");
     }
   }
-
+  //Search for clients by term
   async searchClients(req: Request, res: Response) {
     try {
       const term = req.query.term as string;
@@ -38,7 +40,7 @@ export class ClientController {
       ApiHelper.error(res, "Search failed");
     }
   }
-
+  //Enroll a client in a program
   async enrollClient(req: Request, res: Response) {
     try {
       const clientId = req.params.id;
@@ -57,7 +59,7 @@ export class ClientController {
     }
     ApiHelper.error(res, "Enrollment failed");
   }
-
+  //List enrollments for a client
   async getClientEnrollments(req: Request, res: Response) {
     try {
       const enrollments = await clientService.getEnrollments(req.params.id);

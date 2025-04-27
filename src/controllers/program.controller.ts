@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import { ProgramService } from "../services/program.service";
 import { ApiHelper } from "../helpers/api.helper";
 
+// this controller handle program-related HTTP requests
 const programService = new ProgramService();
 
 export class ProgramController {
+  // Create a new program
   async createProgram(req: Request, res: Response) {
     try {
       const program = await programService.create(req.body);
@@ -17,7 +19,7 @@ export class ProgramController {
       ApiHelper.error(res, message, statusCode);
     }
   }
-
+  // List all programs
   async listPrograms(_req: Request, res: Response) {
     try {
       const programs = await programService.list();
@@ -27,7 +29,7 @@ export class ProgramController {
       ApiHelper.error(res, "Failed to list programs");
     }
   }
-
+  // Get a single program by ID
   async getProgram(req: Request, res: Response) {
     try {
       const program = await programService.findById(req.params.id);
